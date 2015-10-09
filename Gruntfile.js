@@ -15,7 +15,8 @@ module.exports = function (grunt) {
 
   // Automatically load required grunt tasks
   require('jit-grunt')(grunt, {
-    useminPrepare: 'grunt-usemin'
+    useminPrepare: 'grunt-usemin',
+    buildcontrol: 'grunt-build-control'
   });
 
   // Configurable paths
@@ -56,7 +57,20 @@ module.exports = function (grunt) {
         tasks: ['newer:copy:styles', 'postcss']
       }
     },
-
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+      },
+      pages: {
+        options: {
+          remote: 'git@github.com:mallorycurtis/YeomanInstall.git',
+          branch: 'gh-pages'
+        }
+      }
+    },
     browserSync: {
       options: {
         notify: false,
@@ -442,5 +456,3 @@ module.exports = function (grunt) {
     'build'
   ]);
 };
-
-grunt.loadNpmTasks('grunt-build-control');
